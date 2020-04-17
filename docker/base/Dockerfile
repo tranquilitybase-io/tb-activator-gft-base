@@ -24,9 +24,7 @@ RUN git clone https://github.com/hashicorp/terraform.git ./ && \
 WORKDIR /opt/app
 RUN mkdir data/
 
-COPY info.json .
 COPY tf-utils.py .
 
-RUN git clone https://github.com/tranquilitybase-io/tb-activator-gft-datazone.git
 
 

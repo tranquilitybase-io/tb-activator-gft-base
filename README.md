@@ -1,8 +1,20 @@
 
-# Deploying data landing zone
+# GFT Base activator repo
 
-Pre-requisite to build the data science environment is to build the shared
--components infrastructures, and also terraform has been installed and project and service accounts have already been created.
+This repo has been develope to ptovide a hello world activator example and also provide you base image to build future activators.
+
+You can use source code or you two provided packages. Curretly the following packages are avialble:
+
+* helloworld
+* actvator-base
+
+Please see packages link in this repo to get more information related above
+ packages.
+
+We recommend to use the packages than the source code to install base
+ activator but in case you want to use the source code, 
+  you need to have terraform installed and project and service accounts have
+   already been created.
 
 After that please follow the following steps:
 
@@ -15,10 +27,22 @@ provider "google" {
   region      = var.region
 }
 ```
-* Update variables.tf and add your project_id to the following in default = "":
+* Update the following variable in variables.tf:
 ```hcl-terraform
 variable "host_project_id" {
   description = "Project ID, example 'data-science-activator'"
+  default     = ""
+}
+variable "zone" {
+  description = "General zone of the project, example 'europe-west2-b'"
+  default     = ""
+}
+variable "standard_subnetwork" {
+  description = "VPC subnetwork such as main-network-subnet"
+  default     = ""
+}
+variable "region" {
+  description = "General location of the project, example 'europe-west2'"
   default     = ""
 }
 ```

@@ -4,29 +4,12 @@
 # Stage 4: execute command on container,  'docker exec -it {container_id}  terraform init tb-activator-gft-datazone/'
 
 
-FROM golang:alpine
+FROM docker.pkg.github.com/tranquilitybase-io/tb-activator-gft-base/activator-base:1.0
 MAINTAINER "GFT"
 
-ENV TERRAFORM_VERSION=0.12.24
-
-RUN apk add --update git bash openssh python3
-
-ENV TF_DEV=true
-ENV TF_RELEASE=true
-
-WORKDIR $GOPATH/src/github.com/hashicorp/terraform
-RUN git clone https://github.com/hashicorp/terraform.git ./ && \
-    git checkout v${TERRAFORM_VERSION} && \
-    /bin/bash scripts/build.sh
-
-
-
-WORKDIR /opt/app
-RUN mkdir data/
 
 COPY info.json .
-COPY tf-utils.py .
 
-RUN git clone https://github.com/tranquilitybase-io/tb-activator-gft-datazone.git
+RUN git clone https://github.com/tranquilitybase-io/tb-activator-gft-base.git
 
 
