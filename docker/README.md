@@ -9,15 +9,15 @@ Currently the following packages are available:
 * actvator-base (a base image to build future activators)
 
 ## Resources:
-This activator builds the following components:
+Running this package builds the following infrastructure resources in GCP:
 
-## GCE (Google Cloud Compute)
+### GCE (Google Cloud Compute)
 
 Virtual machines that can be used to perform ETL tasks. This activator creates 1 virtual machines. The types of machine can be configured at terraform apply stage using the following variable:
 
 vms_machine_type: Machine type of the virtual both machines, example 'n1-standard-2'
 
-## GCS (Google Cloud Storage)
+### GCS (Google Cloud Storage)
 
 In this activator, we creates one google storage buckets.
 
