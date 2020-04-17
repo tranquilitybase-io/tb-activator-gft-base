@@ -1,9 +1,9 @@
 
-# GFT Base activator repo
+# GFT (Generic) Base Activator Repository
 
-This repo has been develope to ptovide a hello world activator example and also provide you base image to build future activators.
+This repo has been developed to provide a hello world activator example and also provide you base image to build future activators.
 
-You can use source code or you two provided packages. Curretly the following packages are avialble:
+You can use source code or you two provided packages. Currently the following packages are available:
 
 * helloworld
 * actvator-base
