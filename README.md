@@ -16,7 +16,7 @@ Please see packages link in this repo to get more information related above pack
 
 ## Installation: Deploying Base Activator (Using Source Code)
 
-We recommend to use the packages than the source code to install base activator but in case you want to use the source code, you need to have terraform installed and project and service accounts have already been created.
+We recommend using the docker packages to install base activator.  However, using the source code is also feasible.  In this case, it is necessary to have terraform installed and project and service accounts already created.
 
 After that please follow the following steps:
 
@@ -64,8 +64,8 @@ This activator builds the following components:
     
  
   
-## Resources:
-### GCE (Google Cloud Compute) 
+### Resources:
+#### GCE (Google Cloud Compute) 
 Virtual machines that can be used to perform ETL tasks. This activator creates 1 virtual machines. The types of machine can be
  configured at terraform apply stage using the following variable:
  
@@ -73,7 +73,7 @@ Virtual machines that can be used to perform ETL tasks. This activator creates 1
  vms_machine_type: Machine type of the virtual both machines, example 'n1-standard-2'
  ``` 
 
-### GCS (Google Cloud Storage)
+#### GCS (Google Cloud Storage)
 In this activator, we creates one google storage buckets. 
  * landing-data-bucket: To be used for landing incoming data.
  
