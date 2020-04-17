@@ -5,8 +5,8 @@ The tb-activator-gft-base repo has been developed to provide a general template 
 The activator can be installed either through the docker package (recommended) or via the underlying source code. Both of these are available in the repository. For ease of installation, we recommend using the docker packages to install base activator.  
 
 Currently the following packages are available:
-* helloworld (an example that can be customised for the particular use case being solutioned)
-* actvator-base (a base image to build future activators)
+* helloworld (an example that can be customised for the particular use case being solutioned);
+* actvator-base (a base image to build future activators).
 
 ## Resources:
 Running this package builds the following infrastructure resources in GCP:
