@@ -1,7 +1,7 @@
 
 # GFT (Generic) Base Activator Repository [Source Code Variant]
 
-The tb-activator-gft-base repo has been developedto provide a general template for the creation of new activator repos.  As well as considerably accelerating development, this will ensure cross-comparability and uphold consistent standards for any activator repo.
+The tb-activator-gft-base repo has been developed to provide a general template for the creation of new activator repos.  As well as considerably accelerating development, this will ensure cross-comparability and uphold consistent standards for any activator repo.  For example, the tb-activator-gft-datazone repository is based on the template outlined here.
 
 The activator can be installed either through the docker package (recommended) or via the underlying source code. Both of these are available in the repository. This README file describes installation using underlying source code. The 'Docker' folder provides instructions for installation using the docker package.
 
@@ -12,13 +12,11 @@ You can use source code or you two provided packages. Currently the following pa
 * helloworld
 * actvator-base
 
-Please see packages link in this repo to get more information related above
- packages.
+Please see packages link in this repo to get more information related above packages.
 
-We recommend to use the packages than the source code to install base
- activator but in case you want to use the source code, 
-  you need to have terraform installed and project and service accounts have
-   already been created.
+## Installation: Deploying Base Activator (Using Source Code)
+
+We recommend to use the packages than the source code to install base activator but in case you want to use the source code, you need to have terraform installed and project and service accounts have already been created.
 
 After that please follow the following steps:
 
