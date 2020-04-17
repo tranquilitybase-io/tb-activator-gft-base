@@ -1,7 +1,11 @@
 
-# GFT (Generic) Base Activator Repository
+# GFT (Generic) Base Activator Repository [Source Code Variant]
 
-This repo has been developed to provide a hello world activator example and also provide you base image to build future activators.
+The tb-activator-gft-base repo has been developedto provide a general template for the creation of new activator repos.  As well as considerably accelerating development, this will ensure cross-comparability and uphold consistent standards for any activator repo.
+
+The activator can be installed either through the docker package (recommended) or via the underlying source code. Both of these are available in the repository. This README file describes installation using underlying source code. The 'Docker' folder provides instructions for installation using the docker package.
+
+a hello world activator example and also provide you base image to build future activators.
 
 You can use source code or you two provided packages. Currently the following packages are available:
 
