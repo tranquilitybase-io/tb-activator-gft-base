@@ -12,5 +12,6 @@ RUN unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     mv terraform /usr/bin/ && rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 RUN git clone https://bc047f1edccf978f769373abe15b194451054693@github.com/arvindclement/${ACTIVATOR_NAME}.git
-
+RUN mkdir /opt/app/ && mkdir /opt/app/data
+COPY service-account.json /opt/app/data/.
 
