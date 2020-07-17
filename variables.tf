@@ -29,16 +29,16 @@ variable "landing_bucket_name" {
 
 variable "region" {
   description = "General location of the project, example 'europe-west2'"
-  default     = ""
+  default     = "europe-west2"
 }
 
 variable "zone" {
   description = "General zone of the project, example 'europe-west2-b'"
-  default     = ""
+  default     = "europe-west2-b"
 }
 
 variable "standard_subnetwork" {
   description = "VPC subnetwork such as main-network-subnet"
-  default     = ""
+  default     = "default"
 }
 
