@@ -2,7 +2,8 @@
 name: Tranquility Base GFT Base
 description: A helloworld example of an activator.
 category: Infrastructure
-last_updated: 06-Aug-2020
-version: 1.0.0
+type: Tier 3
+last_updated: 2020-08-06
+version: v1.0.0
 platforms: 
   - GCP
