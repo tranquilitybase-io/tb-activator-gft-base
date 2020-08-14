@@ -1,16 +1,9 @@
 ---
-name: gcp helloworld
-category: base
-lastUpdated: 16-Apr-2020
-platforms: GCP
-ci: Jenkins
-cd: Jenkins
+name: Tranquility Base GFT Base
 description: A helloworld example of an activator.
-Url: git@github.com:tranquilitybase-io/tb-activator-gft-base.git
-mandatory variables:
-- standard_subnetwork
-- zone
-- host_project_id
-- region
-optional variables:
-- vms_size
+category: Infrastructure
+type: Tier 3
+last_updated: 2020-08-06
+version: v1.0.0
+platforms: 
+  - GCP
