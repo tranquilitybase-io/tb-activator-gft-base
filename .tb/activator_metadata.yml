@@ -7,3 +7,15 @@ last_updated: 2020-08-06
 version: v1.0.0
 platforms: 
   - GCP
+mandatoryVariables:
+  - name: standard_subnetwork
+    type: string
+  - name: zone
+    type: tb_zone
+  - name: host_project_id
+    type: string
+  - name: region
+    type: tb_region
+optionalVariables:
+  - name: vms_size
+    type: tb_vms_size
