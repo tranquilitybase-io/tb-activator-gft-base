@@ -43,7 +43,7 @@ pipeline
         }
         stage('Enable Required Google APIs') {
            steps {
-              sh "gcloud auth activate-service-account activator-dev-sa@shared-ec-4d6fcf18.iam.gserviceaccount.com --key-file=/var/secrets/google/ec-service-account-config.json --project=$projectid"
+              sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
               sh "gcloud config set project $projectid"
               sh "gcloud services enable compute.googleapis.com"
               sh "gcloud services enable servicemanagement.googleapis.com"
