@@ -34,13 +34,6 @@ pipeline
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
            }
         }
-        stage('Approve Activator Deploy Plan') {
-          steps {
-             script {
-               def userInput = input(id: 'confirm', message: 'Deploy Activator ?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
-               }
-           }
-        }
         stage('Enable Required Google APIs') {
            steps {
               sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
