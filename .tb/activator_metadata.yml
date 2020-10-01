@@ -7,6 +7,10 @@ last_updated: 2020-08-06
 version: v1.0.0
 platforms: 
   - GCP
+ci: 
+  - Jenkins
+cd: 
+  - Jenkins
 mandatoryVariables:
   - name: standard_subnetwork
     type: string
