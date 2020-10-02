@@ -41,7 +41,6 @@ pipeline
               sh "gcloud services enable compute.googleapis.com"
               sh "gcloud services enable servicemanagement.googleapis.com"
               sh "gcloud services enable cloudresourcemanager.googleapis.com"
-              sh "gcloud services enable cloudresourcemanager.googleapis.com"
               sh "gcloud services enable storage-api.googleapis.com"
            }
         }
