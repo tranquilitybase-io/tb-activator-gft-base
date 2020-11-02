@@ -43,7 +43,6 @@ variable "standard_subnetwork" {
 }
 
 
-variable "terraform_bucket_name" {
-  description = "GCS Terraform state bucket name"
-  default     = "activator-tf-remote-state-storage"
+variable "activator_name" {
+  description = "Activator name which will be used as part of GCS Terraform state bucket name"
 }
