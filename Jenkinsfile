@@ -29,9 +29,9 @@ pipeline
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init tb-activator-gft-base"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base"
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
@@ -49,5 +49,15 @@ pipeline
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
          }
+        stage('Set Up Remote State') {
+           steps {
+             sh "
+             cat > backend.tf <<EOF
+             terraform {
+             backend "gcs" {
+               }
+              }
+             EOF"
+             sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config="$activator_name-$projectid" -backend-config="prefix=tb_admin" -force-copy tb-activator-gft-base"
        }
 }
