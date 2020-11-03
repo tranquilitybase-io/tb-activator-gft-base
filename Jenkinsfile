@@ -49,5 +49,10 @@ pipeline
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
          }
+        stage('Set Up Remote State') {
+           steps {
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
+        }
+      }
     }
 }
