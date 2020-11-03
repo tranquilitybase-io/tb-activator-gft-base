@@ -22,16 +22,16 @@ pipeline
         }
         stage('Run Activator Docker Image') {
           steps {
-              sh "${DockerCMD} run -t -d --name base-activator$BUILD_NUMBER tb-test:$BUILD_NUMBER"
+              sh "${DockerCMD} run -t -d --name base-activatorr$BUILD_NUMBER tb-test:$BUILD_NUMBER"
               sh "${DockerCMD} ps"
            }
         }
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
@@ -46,12 +46,12 @@ pipeline
         }
         stage('Activator Infra Deploy') {
            steps {
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
          }
         stage('Set Up Remote State') {
            steps {
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
         }
       }
     }
