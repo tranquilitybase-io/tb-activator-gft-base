@@ -8,7 +8,7 @@ pipeline
     stages {
         stage('Activator SCM Checkout') {
           steps {
-             git '$repourl'
+             git url:'$repourl', branch:'issue-395'
           }
         }
         stage('Build Activator Docker Image')  {
