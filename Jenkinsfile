@@ -51,13 +51,14 @@ pipeline
          }
         stage('Set Up Remote State') {
            steps {
-             sh "
+             script {
              cat > backend.tf <<EOF
              terraform {
              backend "gcs" {
                }
               }
-             EOF"
+             EOF
+             }
              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config="$activator_name-$projectid" -backend-config="prefix=tb_admin" -force-copy tb-activator-gft-base/"
        }
 }
