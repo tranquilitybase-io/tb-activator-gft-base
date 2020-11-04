@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cat > backend.tf <<EOF
 terraform {
