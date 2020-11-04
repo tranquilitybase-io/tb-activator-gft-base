@@ -58,6 +58,7 @@ pipeline
       }
         stage('Set Up Remote State') {
            steps {
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER ls"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | cat backend.tf"
            }
          }
