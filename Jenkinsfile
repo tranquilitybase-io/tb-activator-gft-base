@@ -22,7 +22,7 @@ pipeline
         }
         stage('Run Activator Docker Image') {
           steps {
-              sh "${DockerCMD} run -t -d --name base-activatorr$BUILD_NUMBER tb-test:$BUILD_NUMBER"
+              sh "${DockerCMD} run -t -d --name base-activatorr$BUILD_NUMBER tb-test:$BUILD_NUMBER /bin/bash"
               sh "${DockerCMD} ps"
            }
         }
