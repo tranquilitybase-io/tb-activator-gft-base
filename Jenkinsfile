@@ -5,13 +5,13 @@ pipeline
     def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
     def DockerCMD = "${DockerHome}/bin/docker"
     }
-    stages {
+  //  stages {
         stage('Activator SCM Checkout') {
           steps {
              git url:'$repourl', branch:'issue-395'
           }
         }
-        stage('Build Activator Docker Image')  {
+  //      stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
              sh "ls -ltr docker/"
@@ -20,13 +20,13 @@ pipeline
              sh "${DockerCMD} image ls"
           }
         }
-        stage('Run Activator Docker Image') {
+  //      stage('Run Activator Docker Image') {
           steps {
               sh "${DockerCMD} run -t -d --name base-activatorr$BUILD_NUMBER tb-test:$BUILD_NUMBER"
               sh "${DockerCMD} ps"
            }
         }
-        stage('Activator Terraform init validate plan') {
+  //      stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
@@ -34,7 +34,7 @@ pipeline
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
         }
-        stage('Enable Required Google APIs') {
+ //       stage('Enable Required Google APIs') {
            steps {
               sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
               sh "gcloud config set project $projectid"
@@ -44,14 +44,14 @@ pipeline
               sh "gcloud services enable storage-api.googleapis.com"
            }
         }
-        stage('Activator Infra Deploy') {
+  //      stage('Activator Infra Deploy') {
            steps {
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
          }
         stage('Set Up Remote State') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER echo "hello world"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER echo "hello world""
             //  sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
         }
       }
