@@ -33,7 +33,7 @@ pipeline
               sh "ls -ltr"
              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER ls -l"
              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy ./tb-activator-gft-base"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ && terraform validate"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate ./tb-activator-gft-base "
              // sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
         }
@@ -49,7 +49,7 @@ pipeline
         }
         stage('Activator Infra Deploy') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ && terraform apply --auto-approve -var='host_project_id=$projectid' -var='activator_name=$activator_name'"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply --auto-approve -var='host_project_id=$projectid' -var='activator_name=$activator_name' ./tb-activator-gft-base"
            }
          }
         stage('Create Backend File') {
