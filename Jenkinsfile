@@ -28,7 +28,7 @@ pipeline
         }
          stage('Set Up Remote StateStorage') {
            steps {
-              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER bash -c cd ./tb-activator-gft-base/storage | cat storage.sh"
+              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER cd ./tb-activator-gft-base/ | ls -l"
               sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER bash -c cd tb-activator-gft-base/storage && chmod +x storage.sh"
               sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER bash -c cd tb-activator-gft-base/storage && ./storage.sh"
            }
