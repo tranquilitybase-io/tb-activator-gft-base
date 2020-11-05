@@ -14,7 +14,6 @@ pipeline
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
-             sh "touch tester.txt"
              sh "ls -ltr docker/"
              sh "cat docker/service-account.json"
              sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."
