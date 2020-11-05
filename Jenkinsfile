@@ -31,7 +31,7 @@ pipeline
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd ./tb-activator-gft-base && terraform init -force-copy"
+             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd ./tb-activator-gft-base && ls -l && terraform init -force-copy"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ && terraform validate"
              // sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
