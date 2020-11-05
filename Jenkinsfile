@@ -4,7 +4,8 @@ pipeline
     environment {
     def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
     def DockerCMD = "${DockerHome}/bin/docker"
-    def WorkspacePath = '/var/jenkins_home/workspace/activator-pipeline'
+    def WorkspacePath = "/var/jenkins_home/workspace/activator-pipeline"
+    def ScriptWorkspacePath = "/var/jenkins_home/workspace/activator-pipeline@script"
     }
     stages {
         stage('Activator SCM Checkout') {
@@ -59,7 +60,8 @@ pipeline
       }
         stage('Set Up Remote State') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy"
+              sh "cp -Rf ${WorkspacePath}/backend.tf ${ScriptWorkspacePath}/backend.tf"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
            }
          }
     }
