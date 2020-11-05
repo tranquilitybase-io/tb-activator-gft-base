@@ -49,7 +49,7 @@ pipeline
         }
         stage('Activator Infra Deploy') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply --auto-approve ./tb-activator-gft-base"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply activator-plan --auto-approve ./tb-activator-gft-base"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER ls -l"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | ls -l"
            }
