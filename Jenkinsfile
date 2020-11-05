@@ -50,9 +50,9 @@ pipeline
         stage('Activator Infra Deploy') {
            steps {
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply --auto-approve activator-plan"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER tfstatedir=$(pwd) && echo $tfstatedir"
+             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER tfstatedir=${pwd} && echo $tfstatedir"
              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER ls -l"
-             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER mv $tfstatedir/terraform.tfstate ./tb-activator-gft-base/terraform.tfstate"
+             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER mv ${tfstatedir}/terraform.tfstate ./tb-activator-gft-base/terraform.tfstate"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | ls -l"
            }
          }
