@@ -31,9 +31,9 @@ pipeline
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
+             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ |terraform init -force-copy"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ | terraform validate"
+             // sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
@@ -48,7 +48,7 @@ pipeline
         }
         stage('Activator Infra Deploy') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply --auto-approve activator-plan"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ | terraform apply --auto-approve -var='host_project_id=$projectid' -var='activator_name=$activator_name'"
            }
          }
         stage('Create Backend File') {
@@ -61,8 +61,8 @@ pipeline
         stage('Set Up Remote State') {
            steps {
               sh "cp -Rf ${WorkspacePath}/backend.tf ${ScriptWorkspacePath}/backend.tf"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ | chmod 755 -Rf *.* && chown -Rf jenkins:jenkins *.* && ls -l" 
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ | chmod -755 Rf *.* && chown -Rf jenkins:jenkins *.* && ls -l" 
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base/ | terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy"
            }
          }
     }
