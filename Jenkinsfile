@@ -30,9 +30,9 @@ pipeline
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/ ${WorkspacePath}"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate tb-activator-gft-base/ ${WorkspacePath}"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/  ${WorkspacePath}"
+             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
@@ -47,7 +47,7 @@ pipeline
         }
         stage('Activator Infra Deploy') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply ${WorkspacePath}  --auto-approve activator-plan"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply --auto-approve activator-plan"
            }
          }
         stage('Create Backend File') {
@@ -59,7 +59,7 @@ pipeline
       }
         stage('Set Up Remote State') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | terraform init ${WorkspacePath} -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy"
            }
          }
     }
