@@ -58,12 +58,12 @@ pipeline
          }
         stage('Create Backend File') {
            steps {
-            //  sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | chmod +x backend.sh"
-            //  sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | ./backend.sh"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo terraform { | tee -a backend.tf"
-             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo backend "gcs" { | tee -a backend.tf"
-             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo   } | tee -a backend.tf"
-             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo } | tee -a backend.tf"
+             sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | chmod +x backend.sh"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | ./backend.sh"
+            //  sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo terraform { | tee -a backend.tf"
+            // sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo backend "gcs" { | tee -a backend.tf"
+            // sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo   } | tee -a backend.tf"
+            // sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | echo } | tee -a backend.tf"
             //  sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
         }
       }
