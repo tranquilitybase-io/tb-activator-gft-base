@@ -41,7 +41,3 @@ variable "standard_subnetwork" {
   description = "VPC subnetwork such as main-network-subnet"
   default     = "default"
 }
-
-variable "activator_name" {
-  description = "Activator name which will be used as part of GCS Terraform state bucket name"
-}
