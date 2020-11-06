@@ -13,13 +13,13 @@ pipeline
         }
          stage('Remove previous Docker Images')  {
           steps {
-            sh "${DockerCMD} container stop [f1b6b5656b73]" 
-            sh "${DockerCMD} container stop [26f38100b95a]" 
-            sh "${DockerCMD} container stop [783a91628a8f]" 
-            sh "${DockerCMD} container rm [f1b6b5656b73]" 
-            sh "${DockerCMD} container rm [26f38100b95a]" 
-            sh "${DockerCMD} container rm [783a91628a8f]" 
-            sh "${DockerCMD} image rm [831bf72f9b9c]"
+            sh "${DockerCMD} container stop f1b6b5656b73" 
+            sh "${DockerCMD} container stop 26f38100b95a" 
+            sh "${DockerCMD} container stop 783a91628a8f" 
+            sh "${DockerCMD} container rm f1b6b5656b73" 
+            sh "${DockerCMD} container rm 26f38100b95a" 
+            sh "${DockerCMD} container rm 783a91628a8f" 
+            sh "${DockerCMD} image rm 831bf72f9b9c"
           }
         }
         stage('Build Activator Docker Image')  {
