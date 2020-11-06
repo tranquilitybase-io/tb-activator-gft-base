@@ -28,7 +28,7 @@ pipeline
         }
          stage('Set Up Bucket') {
            steps {
-             sh "gsutil mb -p $projectid -l europe-west2 on gs://${activator_name}-${projectid}"
+             sh "gsutil mb -p $projectid -l europe-west2 gs://${activator_name}-${projectid}"
            }
          }
         stage('Activator Terraform init validate plan') {
