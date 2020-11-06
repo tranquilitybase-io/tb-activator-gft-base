@@ -1,3 +1,8 @@
+terraform {
+backend "gcs" {
+  }
+}
+
 # Google Storage
 resource "google_storage_bucket" "landing_data" {
   name          = "${var.host_project_id}-${var.landing_bucket_name}"
