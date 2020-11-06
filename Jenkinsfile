@@ -8,7 +8,7 @@ pipeline
     stages {
         stage('Activator SCM Checkout') {
           steps {
-             git '$repourl'
+             git url:'$repourl', branch:'issue-600'
           }
         }
         stage('Build Activator Docker Image')  {
@@ -16,22 +16,22 @@ pipeline
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
              sh "ls -ltr docker/"
              sh "cat docker/service-account.json"
-             sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."
+             sh "${DockerCMD} build -t tb-testt:$BUILD_NUMBER docker/."
              sh "${DockerCMD} image ls"
           }
         }
         stage('Run Activator Docker Image') {
           steps {
-              sh "${DockerCMD} run -t -d --name base-activator$BUILD_NUMBER tb-test:$BUILD_NUMBER"
+              sh "${DockerCMD} run -t -d --name base-activatorr$BUILD_NUMBER tb-testt:$BUILD_NUMBER"
               sh "${DockerCMD} ps"
            }
         }
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init tb-activator-gft-base"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
@@ -46,8 +46,15 @@ pipeline
         }
         stage('Activator Infra Deploy') {
            steps {
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
          }
+      stage('Create Backend File') {
+           steps {
+              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER cd tb-activator-gft-base | chmod +x backend.sh"
+              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER cd tb-activator-gft-base | ./backend.sh"
+              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
+        }
+      }
        }
 }
