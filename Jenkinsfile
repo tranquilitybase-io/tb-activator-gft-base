@@ -13,9 +13,9 @@ pipeline
         }
          stage('Remove previous Docker Images')  {
           steps {
-            sh "${DockerCMD} stop $(${DockerCMD} ps -a -q) 
-            sh "${DockerCMD} rm $(${DockerCMD} ps -a -q)
-             sh "${DockerCMD} rmi $(${DockerCMD} images -q)
+            sh "${DockerCMD} stop $(${DockerCMD} ps -a -q)" 
+            sh "${DockerCMD} rm $(${DockerCMD} ps -a -q)"
+             sh "${DockerCMD} rmi $(${DockerCMD} images -q)"
           }
         }
         stage('Build Activator Docker Image')  {
