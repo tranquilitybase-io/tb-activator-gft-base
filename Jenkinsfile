@@ -26,6 +26,16 @@ pipeline
               sh "${DockerCMD} ps"
            }
         }
+        stage('Enable Required Google APIs') {
+           steps {
+              sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
+              sh "gcloud config set project $projectid"
+              sh "gcloud services enable compute.googleapis.com"
+              sh "gcloud services enable servicemanagement.googleapis.com"
+              sh "gcloud services enable cloudresourcemanager.googleapis.com"
+              sh "gcloud services enable storage-api.googleapis.com"
+           }
+        }
          stage('Set Up Bucket') {
            steps {
              sh "gsutil mb -p $projectid -l europe-west2 gs://${activator_name}-${projectid}"
@@ -38,16 +48,6 @@ pipeline
               sh "${DockerCMD} exec base-activators$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin ./tb-activator-gft-base"
               sh "${DockerCMD} exec base-activators$BUILD_NUMBER terraform validate ./tb-activator-gft-base "
               sh "${DockerCMD} exec base-activators$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
-           }
-        }
-        stage('Enable Required Google APIs') {
-           steps {
-              sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
-              sh "gcloud config set project $projectid"
-              sh "gcloud services enable compute.googleapis.com"
-              sh "gcloud services enable servicemanagement.googleapis.com"
-              sh "gcloud services enable cloudresourcemanager.googleapis.com"
-              sh "gcloud services enable storage-api.googleapis.com"
            }
         }
         stage('Activator Infra Deploy') {
