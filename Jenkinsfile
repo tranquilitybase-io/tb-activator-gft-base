@@ -37,7 +37,7 @@ pipeline
               sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER ls -l"
               sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin ./tb-activator-gft-base"
               sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER terraform validate ./tb-activator-gft-base "
-              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
