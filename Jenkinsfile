@@ -11,33 +11,40 @@ pipeline
              git url:'$repourl', branch:'issue-600'
           }
         }
+           stage('Remove previous Docker Images')  {
+          steps {
+           sh "${DockerCMD} container stop 2ffce2f7594b" 
+            sh "${DockerCMD} container rm 2ffce2f7594b" 
+            sh "${DockerCMD} image rm -f a9e57e519b0e"
+          }
+        }
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
              sh "ls -ltr docker/"
              sh "cat docker/service-account.json"
-             sh "${DockerCMD} build -t tb-testt:$BUILD_NUMBER docker/."
+             sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."
              sh "${DockerCMD} image ls"
           }
         }
         stage('Run Activator Docker Image') {
           steps {
-              sh "${DockerCMD} run -t -d --name base-activatorr$BUILD_NUMBER tb-testt:$BUILD_NUMBER"
+              sh "${DockerCMD} run -t -d --name base-activator$BUILD_NUMBER tb-test:$BUILD_NUMBER"
               sh "${DockerCMD} ps"
            }
         }
            stage('Set Up Remote StateStorage') {
            steps {
-              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER bash -c cd ./tb-activator-gft-base/storage && chmod +x storage.sh"
-              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER bash -c cd tb-activator-gft-base/storage && ./storage.sh"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER bash -c cd ./tb-activator-gft-base/storage && chmod +x storage.sh"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER bash -c cd tb-activator-gft-base/storage && ./storage.sh"
            }
          }
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
@@ -52,7 +59,7 @@ pipeline
         }
         stage('Activator Infra Deploy') {
            steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
          }
        }
