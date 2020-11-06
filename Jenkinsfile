@@ -36,7 +36,7 @@ pipeline
            stage('Set Up Remote StateStorage') {
            steps {
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER bash -c cd ./tb-activator-gft-base/storage && chmod +x storage.sh"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER bash -c cd tb-activator-gft-base/storage && ./storage.sh"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER bash -c cd ./tb-activator-gft-base/storage && ./storage.sh"
            }
          }
         stage('Activator Terraform init validate plan') {
