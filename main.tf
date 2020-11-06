@@ -1,6 +1,6 @@
 terraform {
 backend "gcs" {
-    credentials = file("/opt/app/data/service-account.json")
+    credentials = "/opt/app/data/service-account.json"
   }
 }
 
