@@ -26,12 +26,18 @@ pipeline
               sh "${DockerCMD} ps"
            }
         }
+           stage('Set Up Remote StateStorage') {
+           steps {
+              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER bash -c cd ./tb-activator-gft-base/storage && chmod +x storage.sh"
+              sh "${DockerCMD} exec base-activatorrr$BUILD_NUMBER bash -c cd tb-activator-gft-base/storage && ./storage.sh"
+           }
+         }
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -force-copy tb-activator-gft-base/"
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform validate tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var='activator_name=$activator_name' tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
            }
         }
         stage('Enable Required Google APIs') {
@@ -49,12 +55,5 @@ pipeline
               sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
          }
-      stage('Create Backend File') {
-           steps {
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | chmod +x backend.sh"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER cd tb-activator-gft-base | ./backend.sh"
-              sh "${DockerCMD} exec base-activatorr$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
-        }
-      }
        }
 }
