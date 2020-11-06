@@ -11,7 +11,7 @@ RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform
 RUN unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     mv terraform /usr/bin/ && rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
-RUN git clone https://github.com/tranquilitybase-io/tb-activator-gft-base.git
+RUN git clone -b issue-600 --single-branch https://github.com/tranquilitybase-io/tb-activator-gft-base.git
 RUN mkdir /opt/app/ && mkdir /opt/app/data
 COPY service-account.json /opt/app/data/.
 
