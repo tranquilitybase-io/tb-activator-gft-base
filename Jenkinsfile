@@ -13,9 +13,9 @@ pipeline
         }
           stage('Remove previous Docker Images')  {
           steps {
-            sh "${DockerCMD} container stop 3db0420bbc87" 
-            sh "${DockerCMD} container rm 3db0420bbc87" 
-            sh "${DockerCMD} image rm 80300816ac14"
+            sh "${DockerCMD} container stop 9bbb14e0bb16" 
+            sh "${DockerCMD} container rm 9bbb14e0bb16" 
+            sh "${DockerCMD} image rm d9601076e135"
           }
         }
         stage('Build Activator Docker Image')  {
@@ -59,8 +59,8 @@ pipeline
         stage('Set Up Remote State') {
            steps {
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER chmod +x tb-activator-gft-base/backend.sh"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER ./tb-activator-gft-base/backend.sh"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER cd tb-activator-gft-base/ && ./backend.sh"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config=bucket='$activator_name-$projectid' -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
            }
          }
        }
