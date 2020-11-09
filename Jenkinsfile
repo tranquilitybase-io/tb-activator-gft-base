@@ -59,7 +59,7 @@ pipeline
         stage('Set Up Remote State') {
            steps {
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER chmod +x tb-activator-gft-base/backend.sh"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER cd tb-activator-gft-base/ && ./backend.sh"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER bash -c cd tb-activator-gft-base/ && ./backend.sh"
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config=bucket='$activator_name-$projectid' -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
            }
          }
