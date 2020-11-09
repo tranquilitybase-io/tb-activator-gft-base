@@ -60,7 +60,7 @@ pipeline
            steps {
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER chmod +x tb-activator-gft-base/backend.sh"
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER ./tb-activator-gft-base/backend.sh"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config=bucket='$activator_name-$projectid' -backend-config=prefix=tb_admin -force-copy tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init -backend-config=bucket=$activator_name-$projectid -backend-config=prefix=tb_admin -force-copy"
            }
          }
        }
