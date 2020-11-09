@@ -42,3 +42,7 @@ variable "standard_subnetwork" {
   default     = "default"
 }
 
+variable "activator_name" {
+  description = "Activator name which will be used as part of GCS Terraform state bucket name"
+}
+
