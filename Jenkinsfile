@@ -11,13 +11,13 @@ pipeline
              git url:'$repourl', branch:'issue-700'
           }
         }
-          stage('Remove previous Docker Images')  {
-          steps {
-            sh "${DockerCMD} container stop 9bbb14e0bb16" 
-            sh "${DockerCMD} container rm 9bbb14e0bb16" 
-            sh "${DockerCMD} image rm d9601076e135"
-          }
-        }
+         // stage('Remove previous Docker Images')  {
+         // steps {
+           // sh "${DockerCMD} container stop 9bbb14e0bb16" 
+           // sh "${DockerCMD} container rm 9bbb14e0bb16" 
+           // sh "${DockerCMD} image rm d9601076e135"
+         // }
+       // }
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
