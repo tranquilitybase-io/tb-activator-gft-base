@@ -19,6 +19,7 @@ variable "vms_size" {
 
 variable "host_project_id" {
   description = "Project ID, example 'data-science-activator'"
+  default = "default"
 }
 
 variable "landing_bucket_name" {
