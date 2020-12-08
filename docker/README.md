@@ -1,8 +1,11 @@
 # Tranqility Base Activator for Importing Data into Google Cloud Platform (GCP) [Docker Variant]
 
-The tb-activator-gft-base repo has been developed to provide a general template for the creation of new activator repos. As well as considerably accelerating development, this will ensure cross-comparability and uphold consistent standards for any activator repo. For example, the tb-activator-gft-datazone repository is based on the template outlined here.
+The tb-activator-gft-base repo has been developed to provide a general template for the creation of new activator repos. 
+As well as considerably accelerating development, this will ensure cross-comparability and uphold consistent standards for any activator repo. 
+For example, the tb-activator-gft-datazone repository is based on the template outlined here.
 
-The activator can be installed either through the docker package (recommended) or via the underlying source code. Both of these are available in the repository. For ease of installation, we recommend using the docker packages to install base activator.  
+The activator can be installed either through the docker package (recommended) or via the underlying source code. 
+Both of these are available in the repository. For ease of installation, we recommend using the docker packages to install base activator.  
 
 Currently the following packages are available:
 * helloworld (an example that can be customised for the particular use case being solutioned);

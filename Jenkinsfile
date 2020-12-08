@@ -9,7 +9,7 @@ pipeline
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
-             sh "cp *.tf docker/"
+             sh "cp deployment/* docker/"
              sh "ls -ltr docker/"
              sh "cat docker/service-account.json"
              sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."

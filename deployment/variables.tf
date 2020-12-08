@@ -8,7 +8,6 @@ variable "vms_machine_type" {
   description = "Machine type of the virtual machines, example 'n1-standard-2'"
   type    = string
   default = "n1-standard-2"
-  #default = "n1-standard-2"
 }
 
 variable "vms_size" {
