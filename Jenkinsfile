@@ -10,7 +10,8 @@ pipeline
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
              sh "cp deployment/* docker/"
-             sh "echo $activator_params > docker/input.auto.tfvars.json"
+             sh "echo ${activator_params}"
+             sh "echo ${activator_params} > docker/input.auto.tfvars.json"
              sh "ls -ltr docker/"
              sh "cat docker/service-account.json"
              sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."
