@@ -4,7 +4,7 @@ pipeline
     environment {
        def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
        def DockerCMD = "${DockerHome}/bin/docker"
-       def activator_params = ${activator_params}
+       def activator_params = "${activator_params}"
     }
     stages {
         stage('Build Activator Docker Image')  {
