@@ -16,7 +16,7 @@ RUN mkdir tb-activator-gft-base
 COPY *.tf tb-activator-gft-base/
 COPY input.auto.tfvars.json tb-activator-gft-base/
 RUN ls tb-activator-gft-base/
-RUN echo tb-activator-gft-base/input.auto.tfvars.json | jq > tb-activator-gft-base/input.auto.tfvars.json
+RUN cat tb-activator-gft-base/input.auto.tfvars.json | jq '.' > tb-activator-gft-base/input.auto.tfvars.json
 RUN cat tb-activator-gft-base/input.auto.tfvars.json
 RUN mkdir /opt/app/ && mkdir /opt/app/data
 COPY service-account.json /opt/app/data/.
