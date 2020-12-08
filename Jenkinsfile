@@ -1,13 +1,9 @@
 pipeline
 {
-    agent {
-          dockerfile {
-              dir 'docker'
-          }
-    }
+    agent any
     environment {
-    def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-    def DockerCMD = "${DockerHome}/bin/docker"
+       def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+       def DockerCMD = "${DockerHome}/bin/docker"
     }
     stages {
         stage('Build Activator Docker Image')  {
