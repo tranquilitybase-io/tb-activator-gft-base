@@ -13,13 +13,17 @@ RUN unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
 
 RUN mkdir tb-activator-gft-base
 COPY *.tf tb-activator-gft-base/
-COPY input.auto.tfvars.json tb-activator-gft-base/
-RUN ls tb-activator-gft-base
+COPY input.auto.tfvars.json pre-transform.json
 RUN echo "before transform"
-RUN cat tb-activator-gft-base/input.auto.tfvars.json
-RUN ["/bin/bash","-c", "cat tb-activator-gft-base/input.auto.tfvars.json | jq '.' > tb-activator-gft-base/input.auto.tfvars.json"]
+RUN cat pre-transform.json
+RUN ["/bin/bash","-c", "cat pre-transform.json | jq '.' > input.auto.tfvars.json"]
 RUN echo "after transform"
+RUN cat input.auto.tfvars.json
+RUN cp input.auto.tfvars.json tb-activator-gft-base/
+RUN echo "after move"
 RUN cat tb-activator-gft-base/input.auto.tfvars.json
+RUN ls tb-activator-gft-base
+
 RUN mkdir /opt/app/ && mkdir /opt/app/data
 COPY service-account.json /opt/app/data/.
 
