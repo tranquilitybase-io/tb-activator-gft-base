@@ -1,6 +1,10 @@
 pipeline
 {
-  agent any
+    agent {
+          dockerfile {
+              dir 'docker'
+          }
+    }
     environment {
     def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
     def DockerCMD = "${DockerHome}/bin/docker"
