@@ -11,8 +11,10 @@ pipeline
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
              sh "cp deployment/* docker/"
              sh "echo ${activator_params}"
-             echo "activator_params = ${activator_params}"
-             sh "echo ${activator_params} > docker/input.auto.tfvars.json"
+             echo "activator_params (groovy) = ${activator_params}"
+             activator_params = ${activator_params}
+             sh "echo activator_params (shell) \$activator_params"
+             sh "echo \$activator_params > docker/input.auto.tfvars.json"
              sh "ls -ltr docker/"
              sh "cat docker/service-account.json"
              sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."
