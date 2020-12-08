@@ -4,6 +4,7 @@ pipeline
     environment {
        def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
        def DockerCMD = "${DockerHome}/bin/docker"
+       def activator_params = ${activator_params}
     }
     stages {
         stage('Build Activator Docker Image')  {
@@ -12,7 +13,6 @@ pipeline
              sh "cp deployment/* docker/"
              sh "echo ${activator_params}"
              echo "activator_params (groovy) = ${activator_params}"
-             activator_params = ${activator_params}
              sh "echo activator_params (shell) \$activator_params"
              sh "echo \$activator_params > docker/input.auto.tfvars.json"
              sh "ls -ltr docker/"
