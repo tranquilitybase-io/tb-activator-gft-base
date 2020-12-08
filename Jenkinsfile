@@ -6,11 +6,6 @@ pipeline
     def DockerCMD = "${DockerHome}/bin/docker"
     }
     stages {
-        stage('Activator SCM Checkout') {
-          steps {
-             git '$repourl'
-          }
-        }
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
