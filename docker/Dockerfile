@@ -14,9 +14,9 @@ RUN unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
 RUN mkdir tb-activator-gft-base
 COPY *.tf tb-activator-gft-base/
 
-#
-COPY input.auto.tfvars.json tb-activator-gft-base/pre-transform.json
-# RUN ["/bin/bash","-c", "cat tb-activator-gft-base/pre-transform.json | jq '.' > tb-activator-gft-base/pre-transform.json"]
+# process variables json
+COPY activator_params.json activator_params.json
+RUN ["/bin/bash","-c", "cat activator_params.json | jq '.' > tb-activator-gft-base/input.auto.tfvars.json"]
 RUN cat tb-activator-gft-base/input.auto.tfvars.json
 
 RUN ls tb-activator-gft-base
