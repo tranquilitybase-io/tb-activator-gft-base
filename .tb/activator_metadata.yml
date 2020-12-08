@@ -1,6 +1,6 @@
 ---
 name: Tranquility Base GFT Base
-description: A helloworld example of an activator.
+description: A helloworld example of an activator. Just creates a virtual machine and a storage bucket
 category: Infrastructure
 type: Tier 3
 last_updated: 2020-08-06

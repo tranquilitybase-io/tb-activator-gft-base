@@ -6,6 +6,14 @@ pipeline
        def DockerCMD = "${DockerHome}/bin/docker"
     }
     stages {
+        stage('Initialise') {
+            steps {
+                sh '''
+                    echo Setup activator_params
+                    echo $activator_params | jq > deployment/input.auto.tfvars.json
+                '''
+           }
+        }
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
