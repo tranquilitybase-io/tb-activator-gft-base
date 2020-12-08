@@ -13,7 +13,7 @@ RUN unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
 
 #RUN git clone https://github.com/tranquilitybase-io/tb-activator-gft-base.git
 RUN mkdir tb-activator-gft-base
-COPY ../*.tf tb-activator-gft-base
+COPY *.tf tb-activator-gft-base
 RUN mkdir /opt/app/ && mkdir /opt/app/data
 COPY service-account.json /opt/app/data/.
 
