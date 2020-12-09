@@ -9,13 +9,12 @@ pipeline
     stages {
         stage('Build Activator Docker Image')  {
           steps {
-             sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
-             sh "cp deployment/* docker/"
+             sh "cp $GOOGLE_APPLICATION_CREDENTIALS service-account.json"
+             sh "cat service-account.json"
              sh "echo ${activator_params}"
              sh "echo \$activator_params"
-             sh "echo \$activator_params > docker/activator_params.json"
+             sh "echo \$activator_params > activator_params.json"
              sh "ls -ltr docker/"
-             sh "cat docker/service-account.json"
              sh "${DockerCMD} build -f docker/Dockerfile -t tb-test:$BUILD_NUMBER ."
              sh "${DockerCMD} image ls"
           }
