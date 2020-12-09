@@ -1,22 +1,21 @@
 pipeline
 {
-  agent any
+    agent any
     environment {
-    def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-    def DockerCMD = "${DockerHome}/bin/docker"
+       def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+       def DockerCMD = "${DockerHome}/bin/docker"
+       def activator_params = "${activator_params}"
     }
     stages {
-        stage('Activator SCM Checkout') {
-          steps {
-             git '$repourl'
-          }
-        }
         stage('Build Activator Docker Image')  {
           steps {
-             sh "cp $GOOGLE_APPLICATION_CREDENTIALS docker/service-account.json"
+             sh "cp $GOOGLE_APPLICATION_CREDENTIALS service-account.json"
+             sh "cat service-account.json"
+             sh "echo ${activator_params}"
+             sh "echo \$activator_params"
+             sh "echo \$activator_params > activator_params.json"
              sh "ls -ltr docker/"
-             sh "cat docker/service-account.json"
-             sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."
+             sh "${DockerCMD} build -f docker/Dockerfile -t tb-test:$BUILD_NUMBER ."
              sh "${DockerCMD} image ls"
           }
         }
@@ -29,9 +28,9 @@ pipeline
         stage('Activator Terraform init validate plan') {
            steps {
               sh "ls -ltr"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init tb-activator-gft-base"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate tb-activator-gft-base/"
-              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' tb-activator-gft-base/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init deployment_code"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate deployment_code/"
+              sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' deployment_code/"
            }
         }
         stage('Enable Required Google APIs') {
