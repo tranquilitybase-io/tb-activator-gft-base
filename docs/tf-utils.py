@@ -1,12 +1,11 @@
-import re
 import argparse
-import logging
-import sys
-import re
-from shutil import copyfile
-from datetime import datetime
+import argparse
 import json
-
+import logging
+import re
+import sys
+from datetime import datetime
+from shutil import copyfile
 
 logger = logging.getLogger(__name__)
 

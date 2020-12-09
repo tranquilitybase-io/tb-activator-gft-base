@@ -12,7 +12,7 @@ RUN unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     mv terraform /usr/bin/ && rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 RUN mkdir deployment_code
-COPY *.tf deployment_code/
+COPY deployment/*.tf deployment_code/
 
 # process activator variables json
 COPY activator_params.json activator_params.json

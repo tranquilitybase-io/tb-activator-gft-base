@@ -16,7 +16,7 @@ pipeline
              sh "echo \$activator_params > docker/activator_params.json"
              sh "ls -ltr docker/"
              sh "cat docker/service-account.json"
-             sh "${DockerCMD} build -t tb-test:$BUILD_NUMBER docker/."
+             sh "${DockerCMD} build -f docker/Dockerfile -t tb-test:$BUILD_NUMBER ."
              sh "${DockerCMD} image ls"
           }
         }
