@@ -6,7 +6,7 @@ pipeline
        def DockerCMD = "${DockerHome}/bin/docker"
        def activator_params = "${activator_params}"
        def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
-       def gcpApisRequired = activator_metadata.gcpApisRequired
+       def gcpApisRequired = $activator_metadata.gcpApisRequired
     }
     stages {
         stage('Read activator metadata') {
