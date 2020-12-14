@@ -11,7 +11,7 @@ pipeline
         stage('Read activator metadata') {
           steps {
             echo "1 $activator_metadata"
-            echo "2 ${activator_metadata}""
+            echo "2 ${activator_metadata}"
           }
         }
         stage('Build Activator Docker Image')  {
