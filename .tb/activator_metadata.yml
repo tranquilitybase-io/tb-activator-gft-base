@@ -12,18 +12,14 @@ ci:
 cd: 
   - Jenkins
 mandatoryVariables:
-  - name: standard_subnetwork
-    type: string
-    description: VPC subnetwork
   - name: zone
     type: tb_zone
     description: General zone of the project, example 'europe-west2-b'
-  - name: host_project_id
-    type: string
-    description: GCP Project ID to deploy into
+    default: europe-west2-b
   - name: region
     type: tb_region
     description: General region of the project, example 'europe-west2'
+    default: europe-west2
 optionalVariables:
   - name: vms_size
     type: tb_vms_size
@@ -34,4 +30,3 @@ gcpApisRequired:
   - servicemanagement.googleapis.com
   - cloudresourcemanager.googleapis.com
   - storage-api.googleapis.com
-  -
