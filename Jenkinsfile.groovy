@@ -5,7 +5,6 @@ pipeline
        def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
        def DockerCMD = "${DockerHome}/bin/docker"
        def activator_params = "${activator_params}"
-       def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
     }
     stages {
         stage('Enable Required Google APIs') {
@@ -13,12 +12,10 @@ pipeline
               sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
               sh "gcloud config set project $projectid"
               script {
-                  echo "Activator Metadata ${activator_metadata}"
-                  echo "Activator Name ${activator_metadata.get('name')}"
-                  echo "Activator Type ${activator_metadata.get('type')}"
-                  echo "Activator gcpApisRequired ${activator_metadata.get('gcpApisRequired')}"
-                  List gcpApisRequired = activator_metadata.get('gcpApisRequired')
-                  echo "gcpApisRequired ${gcpApisRequired}"
+                  Map activator_metadata = readYaml file: ".tb/activator_metadata.yml" as Map
+                  echo "activator_metadata map ${activator_metadata}"
+                  List gcpApisRequired = activator_metadata.get('gcpApisRequired') as List
+                  echo "gcpApisRequired list ${gcpApisRequired}"
                   if (gcpApisRequired) {
                     gcpApisRequired.each {
                       echo "Enabling $it"
