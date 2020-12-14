@@ -8,7 +8,9 @@ pipeline
             }
             stages {
                 stage('Create GCP Storage Bucket for Terraform State') {
-                    echo "TODO"
+                    steps {
+                        echo "TODO"
+                    }
                 }
                 stage('Activate GCP Service Account and Set Project') {
                     steps {
