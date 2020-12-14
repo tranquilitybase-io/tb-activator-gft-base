@@ -18,9 +18,10 @@ pipeline
               sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
               sh "gcloud config set project $projectid"
               script {
-                  def gcpApisRequired  = activator_metadata.gcpApisRequired
+                  gcpApisRequired  = activator_metadata.gcpApisRequired
+                  echo "gcpApisRequired ${gcpApisRequired}"
                   if (gcpApisRequired) {
-                    activator_metadata.gcpApisRequired.each {
+                    gcpApisRequired.each {
                       echo "Enabling $it"
                       sh "gcloud services enable $it"
                     }
