@@ -8,17 +8,13 @@ pipeline
        def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
     }
     stages {
-        stage('Read activator metadata') {
-          steps {
-            echo "Activator Metadata ${activator_metadata}"
-          }
-        }
         stage('Enable Required Google APIs') {
            steps {
               sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
               sh "gcloud config set project $projectid"
               script {
-                  gcpApisRequired  = activator_metadata.gcpApisRequired
+                  echo "Activator Metadata ${activator_metadata}"
+                  List gcpApisRequired = activator_metadata.gcpApisRequired
                   echo "gcpApisRequired ${gcpApisRequired}"
                   if (gcpApisRequired) {
                     gcpApisRequired.each {
