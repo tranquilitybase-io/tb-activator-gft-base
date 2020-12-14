@@ -14,6 +14,16 @@ pipeline
             echo "Activator Metadata ${activator_metadata}"
           }
         }
+        stage('Enable Required Google APIs') {
+           steps {
+              sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
+              sh "gcloud config set project $projectid"
+              gcpApisRequired.each {
+                  echo "Enabling $it"
+                  sh "gcloud services enable $it"
+              }
+           }
+        }
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS service-account.json"
@@ -38,16 +48,6 @@ pipeline
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init deployment_code"
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate deployment_code/"
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' deployment_code/"
-           }
-        }
-        stage('Enable Required Google APIs') {
-           steps {
-              sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
-              sh "gcloud config set project $projectid"
-              gcpApisRequired.each {
-                  echo "Enabling $it"
-                  sh "gcloud services enable $it"
-              }
            }
         }
         stage('Activator Infra Deploy') {
