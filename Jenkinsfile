@@ -6,12 +6,12 @@ pipeline
        def DockerCMD = "${DockerHome}/bin/docker"
        def activator_params = "${activator_params}"
        def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
+       def gcpApisRequired = activator_metadata.gcpApisRequired
     }
     stages {
         stage('Read activator metadata') {
           steps {
-            echo "1 $activator_metadata"
-            echo "2 ${activator_metadata}"
+            echo "Activator Metadata ${activator_metadata}"
           }
         }
         stage('Build Activator Docker Image')  {
@@ -44,10 +44,10 @@ pipeline
            steps {
               sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
               sh "gcloud config set project $projectid"
-              sh "gcloud services enable compute.googleapis.com"
-              sh "gcloud services enable servicemanagement.googleapis.com"
-              sh "gcloud services enable cloudresourcemanager.googleapis.com"
-              sh "gcloud services enable storage-api.googleapis.com"
+              gcpApisRequired.each {
+                  echo "Enabling $it"
+                  sh "gcloud services enable $it"
+              }
            }
         }
         stage('Activator Infra Deploy') {
