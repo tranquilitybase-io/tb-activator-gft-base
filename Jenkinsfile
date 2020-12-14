@@ -14,11 +14,10 @@ pipeline
               sh "gcloud config set project $projectid"
               script {
                   echo "Activator Metadata ${activator_metadata}"
-                  echo "Activator Name ${activator_metadata.name}"
-                  echo "Activator Type ${activator_metadata.type}"
-                  echo "Activator gcpApisRequired ${activator_metadata.gcpApisRequired}"
-                  echo "Name ${activator_metadata.name}"
-                  List gcpApisRequired = activator_metadata.gcpApisRequired
+                  echo "Activator Name ${activator_metadata.get('name')}"
+                  echo "Activator Type ${activator_metadata.get('type')}"
+                  echo "Activator gcpApisRequired ${activator_metadata.get('gcpApisRequired')}"
+                  List gcpApisRequired = activator_metadata.get('gcpApisRequired')
                   echo "gcpApisRequired ${gcpApisRequired}"
                   if (gcpApisRequired) {
                     gcpApisRequired.each {
