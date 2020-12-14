@@ -12,9 +12,9 @@ pipeline
               sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
               sh "gcloud config set project $projectid"
               script {
-                  Map activator_metadata = readYaml file: ".tb/activator_metadata.yml" as Map
+                  def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
                   echo "activator_metadata map ${activator_metadata}"
-                  List gcpApisRequired = activator_metadata.get('gcpApisRequired') as List
+                  def gcpApisRequired = activator_metadata.get('gcpApisRequired')
                   echo "gcpApisRequired list ${gcpApisRequired}"
                   if (gcpApisRequired) {
                     gcpApisRequired.each {
