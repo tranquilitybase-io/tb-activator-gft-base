@@ -29,3 +29,9 @@ optionalVariables:
     type: tb_vms_size
     description: size of the virtual machine to be created in GB
     default: 20
+gcpApisRequired:
+  - compute.googleapis.com
+  - servicemanagement.googleapis.com
+  - cloudresourcemanager.googleapis.com
+  - storage-api.googleapis.com
+  -

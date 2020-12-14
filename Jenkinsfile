@@ -7,6 +7,11 @@ pipeline
        def activator_params = "${activator_params}"
     }
     stages {
+        stage('Read activator metadata') {
+            def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
+            echo activator_metadata
+            echo $activator_metadata
+        }
         stage('Build Activator Docker Image')  {
           steps {
              sh "cp $GOOGLE_APPLICATION_CREDENTIALS service-account.json"
