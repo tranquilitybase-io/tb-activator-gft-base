@@ -15,7 +15,7 @@ pipeline
                   Map activator_metadata = readYaml file: ".tb/activator_metadata.yml" as Map
                   echo "activator_metadata map ${activator_metadata}"
                   List gcpApisRequired = activator_metadata.get('gcpApisRequired') as List
-                  echo "gcpApisRequired list ${gcpApisRequired}"
+                  echo "gcpApisRequired list  ${gcpApisRequired}"
                   if (gcpApisRequired) {
                     gcpApisRequired.each {
                       echo "Enabling $it"
@@ -55,6 +55,6 @@ pipeline
            steps {
               sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
            }
-         }
-       }
+        }
+    }
 }
