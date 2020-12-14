@@ -15,7 +15,8 @@ pipeline
               script {
                   echo "Activator Metadata ${activator_metadata}"
                   echo "Activator Name ${activator_metadata.name}"
-                  echo "Activator Name ${activator_metadata.name}"
+                  echo "Activator Type ${activator_metadata.type}"
+                  echo "Activator gcpApisRequired ${activator_metadata.gcpApisRequired}"
                   echo "Name ${activator_metadata.name}"
                   List gcpApisRequired = activator_metadata.gcpApisRequired
                   echo "gcpApisRequired ${gcpApisRequired}"
