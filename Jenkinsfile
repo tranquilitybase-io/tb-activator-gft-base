@@ -5,12 +5,14 @@ pipeline
        def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
        def DockerCMD = "${DockerHome}/bin/docker"
        def activator_params = "${activator_params}"
+       def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
     }
     stages {
         stage('Read activator metadata') {
-            def activator_metadata = readYaml file: ".tb/activator_metadata.yml"
-            echo activator_metadata
-            echo $activator_metadata
+          steps {
+            echo "1 $activator_metadata"
+            echo "2 ${activator_metadata}""
+          }
         }
         stage('Build Activator Docker Image')  {
           steps {
