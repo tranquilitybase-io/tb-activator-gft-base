@@ -12,6 +12,10 @@ ci:
 cd: 
   - Jenkins
 mandatoryVariables:
+  - name: standard_subnetwork
+    type: string
+    description: VPC subnetwork'
+    default: default
   - name: zone
     type: tb_zone
     description: General zone of the project, example 'europe-west2-b'
