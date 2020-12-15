@@ -12,14 +12,21 @@ ci:
 cd: 
   - Jenkins
 mandatoryVariables:
-  - name: standard_subnetwork
-    type: string
   - name: zone
     type: tb_zone
-  - name: host_project_id
-    type: string
+    description: General zone of the project, example 'europe-west2-b'
+    default: europe-west2-b
   - name: region
     type: tb_region
+    description: General region of the project, example 'europe-west2'
+    default: europe-west2
 optionalVariables:
   - name: vms_size
     type: tb_vms_size
+    description: size of the virtual machine to be created in GB
+    default: 20
+gcpApisRequired:
+  - compute.googleapis.com
+  - servicemanagement.googleapis.com
+  - cloudresourcemanager.googleapis.com
+  - storage-api.googleapis.com
