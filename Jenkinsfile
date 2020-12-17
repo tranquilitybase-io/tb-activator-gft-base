@@ -50,7 +50,7 @@ pipeline
                 sh "ls -ltr"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init deployment_code"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate deployment_code/"
-                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' deployment_code/"
+                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var-file=deployment_code/activator_params.json deployment_code/"
             }
         }
         stage('Activator Infra Deploy') {

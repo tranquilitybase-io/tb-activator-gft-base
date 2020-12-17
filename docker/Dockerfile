@@ -16,8 +16,8 @@ COPY deployment/*.tf deployment_code/
 
 # process activator variables json
 COPY activator_params.json activator_params.json
-RUN ["/bin/bash","-c", "cat activator_params.json | jq '.' > deployment_code/input.auto.tfvars.json"]
-RUN cat deployment_code/input.auto.tfvars.json
+RUN ["/bin/bash","-c", "cat activator_params.json | jq '.' > deployment_code/activator_params.json"]
+RUN cat deployment_code/activator_params.json
 
 RUN ls deployment_code
 

@@ -5,26 +5,31 @@ category: Infrastructure
 type: Tier 3
 last_updated: 2020-08-06
 version: v1.0.0
-platforms: 
+# cloud platforms this activator can deploy to
+platforms:
   - GCP
-ci: 
+ci:
   - Jenkins
-cd: 
+# CD tools that can deploy this activator
+cd:
   - Jenkins
+# variables that the activator needs to be specified to deploy
 mandatoryVariables:
-  - name: zone
-    type: tb_zone
-    description: General zone of the project, example 'europe-west2-b'
-    default: europe-west2-b
-  - name: region
-    type: tb_region
-    description: General region of the project, example 'europe-west2'
-    default: europe-west2
+# variables that can be changed - otherwise the default is used
 optionalVariables:
   - name: vms_size
     type: tb_vms_size
     description: size of the virtual machine to be created in GB
     default: 20
+# these variables will be supplied from the Tranquility Base Landing Zone by GCP DAC
+environmentVariables:
+  - name: zone
+    type: tb_zone
+    description: General zone of the project, example 'europe-west2-b'
+  - name: region
+    type: tb_region
+    description: General region of the project, example 'europe-west2'
+# GCP APIs that need to be enabled on the GCP project in order for the activator to deploy to it
 gcpApisRequired:
   - compute.googleapis.com
   - servicemanagement.googleapis.com
