@@ -5,6 +5,7 @@ pipeline
         def DockerHome = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
         def DockerCMD = "${DockerHome}/bin/docker"
         def activator_params = "${activator_params}"
+        def environment_params = "${environment_params}"
     }
     stages {
         stage('Activate GCP Service Account and Set Project') {
@@ -34,6 +35,8 @@ pipeline
                 sh "cat service-account.json"
                 sh "echo \$activator_params"
                 sh "echo \$activator_params > activator_params.json"
+                sh "echo \$environment_params"
+                sh "echo \$environment_params > environment_params.json"
                 sh "ls -ltr docker/"
                 sh "${DockerCMD} build -f docker/Dockerfile -t tb-test:$BUILD_NUMBER ."
                 sh "${DockerCMD} image ls"
@@ -50,7 +53,7 @@ pipeline
                 sh "ls -ltr"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform init deployment_code"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform validate deployment_code/"
-                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var-file=deployment_code/activator_params.json deployment_code/"
+                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform plan -out activator-plan -var='host_project_id=$projectid' -var-file=deployment_code/activator_params.json -var-file=deployment_code/environment_params.json deployment_code/"
             }
         }
         stage('Activator Infra Deploy') {

@@ -15,20 +15,39 @@ cd:
   - Jenkins
 # variables that the activator needs to be specified to deploy
 mandatoryVariables:
+  - name: mand_var_1
+    type: string
+    description: example of a mandatory variable. not used in deployment script
+    default: TEST
+  - name: mand_var_2
+    type: string
+    description: example of a mandatory variable. not used in deployment script
+    default: ANOTHERTEST
+  - name: mand_var_3
+    type: string
+    description: example of a mandatory variable. not used in deployment script
+    default: YETANOTHERTEST
 # variables that can be changed - otherwise the default is used
 optionalVariables:
   - name: vms_size
     type: tb_vms_size
-    description: size of the virtual machine to be created in GB
+    description: size of the virtual machine to be created in GB. used in deployment script
     default: 20
+  - name: vms_machine_type
+    type: string
+    description: Machine type of the virtual machines, example 'n1-standard-2'
+    default: n1-standard-2
 # these variables will be supplied from the Tranquility Base Landing Zone by GCP DAC
 environmentVariables:
-  - name: zone
-    type: tb_zone
-    description: General zone of the project, example 'europe-west2-b'
   - name: region
     type: tb_region
-    description: General region of the project, example 'europe-west2'
+    description: General region of the project, example 'europe-west2'. used in deployment script
+  - name: zone
+    type: tb_zone
+    description: General zone of the project, example 'europe-west2-b'. Must be compatible with region. used in deployment script
+  - name: shared_vpc_project_id
+    type: string
+    description: Shared VPC Project ID. Not used in deployment script
 # GCP APIs that need to be enabled on the GCP project in order for the activator to deploy to it
 gcpApisRequired:
   - compute.googleapis.com
