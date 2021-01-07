@@ -59,6 +59,7 @@ pipeline
         stage('Activator Infra Deploy') {
             steps {
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
+                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > terraform_output.json"
             }
         }
     }
