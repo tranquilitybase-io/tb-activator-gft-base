@@ -8,6 +8,12 @@ pipeline
         def environment_params = "${environment_params}"
     }
     stages {
+        stage('Create file in workspace') {
+            steps {
+                echo "writing  text file in workspace"
+                sh "cat \"test text \" >  test.txt"
+            }
+        }
         stage('Activate GCP Service Account and Set Project') {
             steps {
                 sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
