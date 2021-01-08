@@ -11,7 +11,7 @@ pipeline
         stage('Create file in workspace') {
             steps {
                 echo "writing  text file in workspace"
-                sh "cat \"test text \" >  test.txt"
+                sh "echo \"test text \" >  test.txt"
             }
         }
         stage('Activate GCP Service Account and Set Project') {
