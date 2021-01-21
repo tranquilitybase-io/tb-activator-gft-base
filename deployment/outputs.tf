@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-output "storage_bucket" {
+output "storage_bucket_url" {
   description = "storage bucket created"
-  value       = google_storage_bucket.landing_data
+  value       = google_storage_bucket.landing_data.url
 }
 
 output "virtual_machine" {
   description = "virtual machine created"
-  value       = google_compute_instance.vm_instance
+  value       = google_compute_instance.vm_instance.name
 }
 

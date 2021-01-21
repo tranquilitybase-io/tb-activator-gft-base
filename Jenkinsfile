@@ -6,12 +6,15 @@ pipeline
         def DockerCMD = "${DockerHome}/bin/docker"
         def activator_params = "${activator_params}"
         def environment_params = "${environment_params}"
+        def terraform_output = ""
     }
     stages {
         stage('Create file in workspace') {
             steps {
                 echo "writing  text file in workspace"
                 sh "echo \"test text \" >  test.txt"
+                terraform_output = sh (returnStdout: true, script: 'cat test.txt').trim()
+                echo "Terraform output : ${terraform_output}"
             }
         }
         stage('Activate GCP Service Account and Set Project') {
@@ -66,6 +69,8 @@ pipeline
             steps {
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > terraform_output.json"
+                terraform_output = sh (returnStdout: true, script: 'cat terraform_output.json').trim()
+                echo "Terraform output : ${terraform_output}"
             }
         }
     }

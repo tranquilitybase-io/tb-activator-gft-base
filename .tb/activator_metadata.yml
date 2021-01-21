@@ -48,6 +48,15 @@ environmentVariables:
   - name: shared_vpc_project_id
     type: string
     description: Shared VPC Project ID. Not used in deployment script
+# these variables represent the outputs of the activator. For ease of definition the names should match the output names in the terraform outputs.tf file
+outputVariables
+  - name: storage_bucket_url
+    type: string
+    description: Name of the GCP cloud storage bucket created
+  - name: virtual_machine_name
+    type: string
+    description: Name of the GCP compute engine virtual machine created
+
 # GCP APIs that need to be enabled on the GCP project in order for the activator to deploy to it
 gcpApisRequired:
   - compute.googleapis.com
