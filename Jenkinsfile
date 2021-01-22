@@ -16,6 +16,7 @@ pipeline
                 script {
                     terraform_output = sh (returnStdout: true, script: 'cat test.txt').trim()
                     echo "Terraform output : ${terraform_output}"
+                    archiveArtifacts artifacts: 'test.txt'
                 }
             }
         }
@@ -72,8 +73,9 @@ pipeline
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > terraform_output.json"
                 script {
-                terraform_output = sh (returnStdout: true, script: 'cat terraform_output.json').trim()
-                echo "Terraform output : ${terraform_output}"
+                    terraform_output = sh (returnStdout: true, script: 'cat terraform_output.json').trim()
+                    echo "Terraform output : ${terraform_output}"
+                    archiveArtifacts artifacts: 'terraform_output.json'
                 }
             }
         }
