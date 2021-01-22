@@ -13,8 +13,10 @@ pipeline
             steps {
                 echo "writing  text file in workspace"
                 sh "echo \"test text \" >  test.txt"
-                terraform_output = sh (returnStdout: true, script: 'cat test.txt').trim()
-                echo "Terraform output : ${terraform_output}"
+                script {
+                    terraform_output = sh (returnStdout: true, script: 'cat test.txt').trim()
+                    echo "Terraform output : ${terraform_output}"
+                }
             }
         }
         stage('Activate GCP Service Account and Set Project') {
@@ -69,8 +71,10 @@ pipeline
             steps {
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > terraform_output.json"
+                script {
                 terraform_output = sh (returnStdout: true, script: 'cat terraform_output.json').trim()
                 echo "Terraform output : ${terraform_output}"
+                }
             }
         }
     }
