@@ -13,7 +13,8 @@ pipeline
             steps {
                 echo "writing  text file in workspace"
 //                 sh "echo \"test text \" >  activator_outputs.json"
-                sh "echo ${activator_params} > activator_outputs.json"
+//                 sh "echo ${activator_params} > activator_outputs.json"
+                sh "printf \"%s\" ${activator_params} > activator_outputs.json"
                 script {
                     terraform_output = sh (returnStdout: true, script: 'cat activator_outputs.json').trim()
                     echo "Terraform output : ${terraform_output}"
