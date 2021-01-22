@@ -12,11 +12,12 @@ pipeline
         stage('Create file in workspace') {
             steps {
                 echo "writing  text file in workspace"
-                sh "echo \"test text \" >  test.txt"
+//                 sh "echo \"test text \" >  activator_outputs.json"
+                sh "echo ${activator_params} > activator_outputs.json"
                 script {
-                    terraform_output = sh (returnStdout: true, script: 'cat test.txt').trim()
+                    terraform_output = sh (returnStdout: true, script: 'cat activator_outputs.json').trim()
                     echo "Terraform output : ${terraform_output}"
-                    archiveArtifacts artifacts: 'test.txt'
+                    archiveArtifacts artifacts: 'activator_outputs.json'
                 }
             }
         }
@@ -71,11 +72,11 @@ pipeline
         stage('Activator Infra Deploy') {
             steps {
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
-                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > terraform_output.json"
+                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > activator_outputs.json"
                 script {
                     terraform_output = sh (returnStdout: true, script: 'cat terraform_output.json').trim()
                     echo "Terraform output : ${terraform_output}"
-                    archiveArtifacts artifacts: 'terraform_output.json'
+                    archiveArtifacts artifacts: 'activator_outputs.json'
                 }
             }
         }
