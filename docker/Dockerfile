@@ -19,6 +19,11 @@ COPY activator_params.json activator_params.json
 RUN ["/bin/bash","-c", "cat activator_params.json | jq '.' > deployment_code/activator_params.json"]
 RUN cat deployment_code/activator_params.json
 
+# process environment variables json
+COPY environment_params.json environment_params.json
+RUN ["/bin/bash","-c", "cat environment_params.json | jq '.' > deployment_code/environment_params.json"]
+RUN cat deployment_code/environment_params.json
+
 RUN ls deployment_code
 
 RUN mkdir /opt/app/ && mkdir /opt/app/data
