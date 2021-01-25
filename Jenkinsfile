@@ -9,19 +9,6 @@ pipeline
         def terraform_output = ""
     }
     stages {
-        stage('Create file in workspace') {
-            steps {
-                echo "writing  text file in workspace"
-//                 sh "echo \"test text \" >  activator_outputs.json"
-//                 sh "echo ${activator_params} > activator_outputs.json"
-                sh "printf \"%s\" ${activator_params} > activator_outputs.json"
-                script {
-                    terraform_output = sh (returnStdout: true, script: 'cat activator_outputs.json').trim()
-                    echo "Terraform output : ${terraform_output}"
-                    archiveArtifacts artifacts: 'activator_outputs.json'
-                }
-            }
-        }
         stage('Activate GCP Service Account and Set Project') {
             steps {
                 sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
@@ -75,7 +62,7 @@ pipeline
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > activator_outputs.json"
                 script {
-                    terraform_output = sh (returnStdout: true, script: 'cat terraform_output.json').trim()
+                    terraform_output = sh (returnStdout: true, script: 'cat activator_outputs.json').trim()
                     echo "Terraform output : ${terraform_output}"
                     archiveArtifacts artifacts: 'activator_outputs.json'
                 }
