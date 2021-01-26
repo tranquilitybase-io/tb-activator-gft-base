@@ -6,6 +6,7 @@ pipeline
         def DockerCMD = "${DockerHome}/bin/docker"
         def activator_params = "${activator_params}"
         def environment_params = "${environment_params}"
+        def terraform_output = ""
     }
     stages {
         stage('Activate GCP Service Account and Set Project') {
@@ -59,6 +60,12 @@ pipeline
         stage('Activator Infra Deploy') {
             steps {
                 sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform apply  --auto-approve activator-plan"
+                sh "${DockerCMD} exec base-activator$BUILD_NUMBER terraform output -json > activator_outputs.json"
+                script {
+                    terraform_output = sh (returnStdout: true, script: 'cat activator_outputs.json').trim()
+                    echo "Terraform output : ${terraform_output}"
+                    archiveArtifacts artifacts: 'activator_outputs.json'
+                }
             }
         }
     }
